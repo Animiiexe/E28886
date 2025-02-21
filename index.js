@@ -117,16 +117,19 @@ app.post("/login", (req, res) => {
   // Check for empty values
   if (!username || !password) {
     errors.push("Please provide proper username & password");
-  }
+  } else {
+    // Check if user exists in the database
+    const user = db.prepare("SELECT * FROM users WHERE username = ?").get(username);
 
-  // TODO: If not exists
-  if (!users[username]) {
-    errors.push("User does not exist");
-  }
-
-  // Check for password
-  if (users[username] !== password) {
-    errors.push("Invalid username / password");
+    if (!user) {
+      errors.push("User does not exist");
+    } else {
+      // Check if the password matches
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+      if (!isPasswordValid) {
+        errors.push("Invalid username / password");
+      }
+    }
   }
 
   if (errors.length > 0) {
