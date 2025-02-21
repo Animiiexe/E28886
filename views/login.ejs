@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('includes/head') %>
-
+  <%- include('includes/head') %>
   <body>
     <%- include('includes/header') %>
-      <main>
-        <form action="#" method="POST">
-          <fieldset>
-            <legend>Log In</legend>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" autocomplete="off" />
-            <br />
+    <main>
+      <% if(errors.length > 0) { %>
+      <p><mark style="background: tomato">Errors</mark></p>
+      <ul>
+        <% errors.forEach((error) => { %>
+        <li><%= error %></li>
+        <% }) %>
+      </ul>
+      <% } %>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" autocomplete="off" />
-            <br />
+      <form action="#" method="POST">
+        <fieldset>
+          <legend>Log In</legend>
 
-            <button type="submit">Log In</button>
-          </fieldset>
-        </form>
-      </main>
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            autocomplete="off"
+            required
+          />
+          <br />
 
-      <%- include('includes/footer') %>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            autocomplete="off"
+            required
+          />
+          <br />
+
+          <button type="submit">Log In</button>
+        </fieldset>
+      </form>
+    </main>
+
+    <%- include('includes/footer') %>
   </body>
-
 </html>
